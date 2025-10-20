@@ -23,9 +23,44 @@ namespace PrimeNumbersAgain
             EvaluatePassingTime(timer.Elapsed.Seconds);
         }
 
-        static int FindNthPrime(int n)
+             static int FindNthPrime(int n)
         {
-            return 0;
+            int count = 0;   // how many primes we've found so far
+            int number = 1;  // current number being checked
+
+            // Keep going until we've found n primes
+            while (count < n)
+            {
+                number++;
+
+                // check if the current number is prime
+                bool isPrime = true;
+
+                // skip even numbers except 2 for a small speed boost
+                if (number > 2 && number % 2 == 0)
+                {
+                    isPrime = false;
+                }
+                else
+                {
+                    // test divisibility from 2 up to the square root of the number
+                    for (int i = 3; i * i <= number; i+=2)
+                    {
+                        if (number % i == 0)
+                        {
+                            isPrime = false;
+                            break; // not a prime, stop checking
+                        }
+                    }
+                }
+
+                // if it's prime, increase the count
+                if (isPrime)
+                    count++;
+            }
+
+            // when count == n, "number" is the nth prime
+            return number;
         }
 
         static int GetNumber()
